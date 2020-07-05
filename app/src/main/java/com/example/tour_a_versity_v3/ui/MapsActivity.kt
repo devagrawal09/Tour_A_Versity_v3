@@ -1,8 +1,9 @@
-package com.example.tour_a_versity_v3
+package com.example.tour_a_versity_v3.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tour_a_versity_v3.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -35,12 +36,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         this.map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_HYBRID
         map.setOnInfoWindowClickListener(this)
-        //set values for TUC
-        val tucLat = 39.13175
-        val tucLng = -84.51774
         val zoomLevel = 17f
         //create LatLng object for TUC
-        val tucLatLng = LatLng(tucLat, tucLng)
+        val tucLatLng = this.getTucLatLng()
         //move camera to TUC & add marker
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(tucLatLng, zoomLevel))
         tucMarker = map.addMarker(MarkerOptions()
@@ -50,22 +48,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         )
 
         //create another marker for CECH
-        val cechLat = 39.130315
-        val cechLng = -84.518680
-        val cechLatLng = LatLng(cechLat, cechLng)
+        val cechLatLng = this.getCechLatLng()
         cechMarker = map.addMarker(MarkerOptions()
                 .position(cechLatLng)
                 .title("CECH")
                 .snippet("College of Education, Criminal Justice, Human Services, and IT")
         )
     }
+
+    fun getTucLatLng(): LatLng {
+        val tucLat = 39.13175
+        val tucLng = -84.51774
+        return LatLng(tucLat, tucLng)
+    }
+
+    fun getCechLatLng(): LatLng {
+        val cechLat = 39.130315
+        val cechLng = -84.518680
+        return LatLng(cechLat, cechLng)
+    }
+
     override fun onInfoWindowClick(p0: Marker?) {
         if (p0 == tucMarker){
-            val intent = Intent(this, TUC_Info::class.java)
+            val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
         else if (p0 == cechMarker){
-            val intent = Intent(this, CECH_Info::class.java)
+            val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
     }
