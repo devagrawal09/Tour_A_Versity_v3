@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
+    private val DEFAULT_ZOOM_LEVEL = 17f
     private lateinit var map: GoogleMap
     private lateinit var tucMarker: Marker
     private lateinit var cechMarker: Marker
@@ -21,6 +22,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
@@ -36,36 +38,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         this.map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_HYBRID
         map.setOnInfoWindowClickListener(this)
-        val zoomLevel = 17f
-        //create LatLng object for TUC
-        val tucLatLng = this.getTucLatLng()
+
         //move camera to TUC & add marker
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(tucLatLng, zoomLevel))
-        tucMarker = map.addMarker(MarkerOptions()
-                .position(tucLatLng)
-                .title("TUC")
-                .snippet("Tangeman University Center")
-        )
+        moveCameraToTuc()
+        tucMarker = getTucMarker()
 
         //create another marker for CECH
-        val cechLatLng = this.getCechLatLng()
-        cechMarker = map.addMarker(MarkerOptions()
-                .position(cechLatLng)
-                .title("CECH")
-                .snippet("College of Education, Criminal Justice, Human Services, and IT")
-        )
-    }
-
-    fun getTucLatLng(): LatLng {
-        val tucLat = 39.13175
-        val tucLng = -84.51774
-        return LatLng(tucLat, tucLng)
-    }
-
-    fun getCechLatLng(): LatLng {
-        val cechLat = 39.130315
-        val cechLng = -84.518680
-        return LatLng(cechLat, cechLng)
+        cechMarker = getCechMarker()
     }
 
     override fun onInfoWindowClick(p0: Marker?) {
@@ -79,4 +58,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         }
     }
 
+    /**
+     * Creates a marker object for TUC
+     */
+    private fun getTucMarker(): Marker {
+        val tucLat = 39.13175
+        val tucLng = -84.51774
+        val tucLatLng = LatLng(tucLat, tucLng)
+        return map.addMarker(MarkerOptions()
+            .position(tucLatLng)
+            .title("TUC")
+            .snippet("Tangeman University Center")
+        )
+    }
+
+    /**
+     * Creates a marker object for CECH
+     */
+    private fun getCechMarker(): Marker {
+        val cechLat = 39.130315
+        val cechLng = -84.518680
+        val cechLatLng = LatLng(cechLat, cechLng)
+        return map.addMarker(MarkerOptions()
+            .position(cechLatLng)
+            .title("CECH")
+            .snippet("College of Education, Criminal Justice, Human Services, and IT")
+        )
+    }
+
+    /**
+     * Moves camera to TUC
+     */
+    private fun moveCameraToTuc() {
+        val tucLat = 39.13175
+        val tucLng = -84.51774
+        val tucLatLng = LatLng(tucLat, tucLng)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(tucLatLng, DEFAULT_ZOOM_LEVEL))
+    }
 }
