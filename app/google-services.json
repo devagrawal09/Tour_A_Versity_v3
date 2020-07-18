@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "795647448026",
+    "firebase_url": "https://tour-a-versity.firebaseio.com",
+    "project_id": "tour-a-versity",
+    "storage_bucket": "tour-a-versity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795647448026:android:a41579848115e1581626e3",
+        "android_client_info": {
+          "package_name": "com.example.tour_a_versity_v3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795647448026-u4c97ol0ndk27a2mos7207dc61t85odt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz5nja1BnhWOWmbyOqay9W8MhLnnLrUyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795647448026-u4c97ol0ndk27a2mos7207dc61t85odt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
