@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +24,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     private lateinit var mcmickenMarker: Marker
     private lateinit var braunsteinMarker: Marker
     private lateinit var daapMarker: Marker
+    private var markers: MutableLiveData<ArrayList<Marker>> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +60,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         )
 
         // marker for CECH
-        val cechLat = 39.130315
-        val cechLng = -84.518680
-        val cechLatLng = LatLng(cechLat, cechLng)
-        cechMarker = map.addMarker(MarkerOptions()
-                .position(cechLatLng)
-                .title("CECH")
-                .snippet("College of Education, Criminal Justice, Human Services, and IT")
-        )
+        createCechMarker()
+
         // marker for UC pavilion
         val pavilionLat = 39.131050
         val pavilionLng = -84.518669
@@ -127,36 +123,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         )
 
     }
+
+    fun createCechMarker() {
+        val cechLat = 39.130315
+        val cechLng = -84.518680
+        val cechLatLng = LatLng(cechLat, cechLng)
+        cechMarker = map.addMarker(MarkerOptions()
+            .position(cechLatLng)
+            .title("CECH")
+            .snippet("College of Education, Criminal Justice, Human Services, and IT")
+        )
+    }
+
     override fun onInfoWindowClick(p0: Marker?) {
         if (p0 == tucMarker){
             val intent = Intent(this, TUC_Info::class.java)
             startActivity(intent)
         }
-        else if (p0 == cechMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == pavilionMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == lawMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == belgenMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == mcmickenMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == braunsteinMarker){
-            val intent = Intent(this, CECH_Info::class.java)
-            startActivity(intent)
-        }
-        else if (p0 == daapMarker){
+        else {
             val intent = Intent(this, CECH_Info::class.java)
             startActivity(intent)
         }
